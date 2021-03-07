@@ -1,2 +1,4 @@
-a = int(input())
-print(sum([a%i==0 for i in range(2,int(a**0.5)+1)])==0 and a!=1)
+with open("input.txt","r") as f:
+    for a in enumerate(f):
+        pass
+    print(a[0]+1)

@@ -1,1 +1,2 @@
-print('-'.join(sorted(input().split('-'))))
+import os
+print(os.stat("input.txt").st_size)

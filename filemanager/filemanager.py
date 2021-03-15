@@ -1,9 +1,10 @@
 import os
 import os.path
 import time
-os.system("color 27")
+os.system("color 17")
 initial_path = "C:"
 os.chdir(initial_path)
+isclosed = False
 welcome = '''WELCOME
 '''
 instruction = '''
@@ -19,15 +20,21 @@ files - show number of files
 dirs - show number of directories
 list - show list of stuff which are included in the current directory
 help - show instructions again(this text)
+color - change color(such as in cmd)
 
 Good luck! :3
 '''
+def color(c):
+    try:
+        os.system("color ")
+    except:
+        pass
 def cd(c):
     try:
         os.chdir(c[1])
     except:
         print(c[1])
-        print("The file or directory cannot be reached")
+        print("The directory doesn\'t exist")
 def delete(c):
     try:
         if(os.path.isfile(c[1])):
@@ -105,14 +112,15 @@ def hlp(c):
     if(len(c)>1):
         print(instruction)
     else:
-        os.system("color")
-        for i in range(len(instruction)):
-            print(instruction[0:i])
-            os.system("cls")
+        os.system("cls")
+        for i in instruction:
+            print(i,end = "")
+            if(i=="\n"): time.sleep(0.3)
 def qt(c):
+    global isclosed
     print("Goodbay!!!")
     time.sleep(2)
-    os._exit()
+    isclosed = True
 def create(c):
     try:
         if(not os.access(c[1],os.F_OK)):
@@ -127,6 +135,11 @@ def create(c):
             print("The file already exists")
     except:
         print("The file or directory cannot be created")
+def color(c):
+    try:
+        os.system(" ".join(c))
+    except:
+        pass
 content = bytes()
 name = ""
 def copy(c):
@@ -157,9 +170,10 @@ functions = {"mkdir":mkdir,"put":put,
              "files":files,"return":rtrn,
              "rename":rename,"edit":edit,
              "rewrite":rewrite,"exit":qt,
-             "help":hlp}
+             "help":hlp,
+             "color":color}
 def main():
-    while(True):
+    while(not isclosed):
         c = input(os.getcwd()+" ").split()
         try:
             if(c[0] in functions.keys()):
@@ -168,5 +182,6 @@ def main():
                 print("Invalid command")
         except:
             pass
+    exit()
 hlp(["hello"])
 main()

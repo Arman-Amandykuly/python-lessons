@@ -80,9 +80,20 @@ class Graph:
             if(s>33):
                 s-=23
         pygame.display.flip()
+    def rct(self,x,y):
+        self.font = pygame.font.SysFont(None,24)
+        self.sin = self.font.render("sin(x)",True,(0,0,0))
+        self.cos = self.font.render("cos(x)",True,(0,0,0))
+        self.canvas.blit(self.sin,(self.addx+self.pikuseru*2+10,int(self.pikuseru/4)+5))
+        self.canvas.blit(self.cos,(self.addx+self.pikuseru*2+10,int(self.pikuseru/4)+25))
+        self.rain(self.addx+self.pikuseru*2-10,int(self.pikuseru/4)+8,self.addx+self.pikuseru*2+5,int(self.pikuseru/4)+8,color = (255,0,0))
+        self.rain(self.addx+self.pikuseru*2-10,int(self.pikuseru/4)+28,self.addx+self.pikuseru*2-4,int(self.pikuseru/4)+28,color = (0,0,255))
+        self.rain(self.addx+self.pikuseru*2-1,int(self.pikuseru/4)+28,self.addx+self.pikuseru*2+5,int(self.pikuseru/4)+28,color = (0,0,255))
+        pygame.display.flip()
 g = Graph(math.sin,width = 600,height = 450,interval = 4)
 g.graph(math.cos,(0,0,255))
 done = False
+g.rct(2,2)
 while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

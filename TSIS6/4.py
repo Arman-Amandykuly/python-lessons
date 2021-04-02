@@ -1,1 +1,1 @@
-print(input().reverse())
+print(input()[:-1])

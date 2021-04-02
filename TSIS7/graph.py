@@ -2,6 +2,7 @@ import pygame,math
 class Graph:
     addx = 20
     addy = 20
+    #font = pygame.font.SysFont("comicsansms",10)
     def rain(self,x1,y1,x2,y2,color = (0,0,0),width = 1):
         int(x1+self.addx+self.midx)
         pygame.draw.line(self.canvas,color,(int(x1+self.addx+self.midx),int(self.midy-y1+self.addy)),(int(x2+self.addx+self.midx),int(-y2+self.addy+self.midy)),width)
@@ -31,14 +32,59 @@ class Graph:
             x+=1
         pygame.draw.rect(self.canvas,(0,0,0),pygame.Rect((self.addx,self.addy),(self.w,self.h)),3)
         pygame.display.flip()
+        for i in range(4*self.inv):
+            if(i%8):
+                self.rain(i*self.pikuseru/8,self.midy,i*self.pikuseru/8,self.midy-4,width = 2)
+                self.rain(-i*self.pikuseru/8,self.midy,-i*self.pikuseru/8,self.midy-4,width = 2)
+                self.rain(i*self.pikuseru/8,-self.midy,i*self.pikuseru/8,-self.midy+4,width = 2)
+                self.rain(-i*self.pikuseru/8,-self.midy,-i*self.pikuseru/8,-self.midy+4,width = 2)
+        for i in range(2*self.inv):
+            if(i%4):
+                self.rain(i*self.pikuseru/4,self.midy,i*self.pikuseru/4,self.midy-8,width = 2)
+                self.rain(-i*self.pikuseru/4,self.midy,-i*self.pikuseru/4,self.midy-8,width = 2)
+                self.rain(i*self.pikuseru/4,-self.midy,i*self.pikuseru/4,-self.midy+8,width = 2)
+                self.rain(-i*self.pikuseru/4,-self.midy,-i*self.pikuseru/4,-self.midy+8,width = 2)
+        for i in range(1,self.inv,2):
+            self.rain(i*self.pikuseru/2,self.midy,i*self.pikuseru/2,self.midy-12,width = 2)
+            self.rain(-i*self.pikuseru/2,self.midy,-i*self.pikuseru/2,self.midy-12,width = 2)
+            self.rain(i*self.pikuseru/2,-self.midy,i*self.pikuseru/2,-self.midy+12,width = 2)
+            self.rain(-i*self.pikuseru/2,-self.midy,-i*self.pikuseru/2,-self.midy+12,width = 2)
+        for i in range(8*self.inv-8):
+            if(i%8):
+                self.rain(-self.midx,i*self.pikuseru/16,-self.midx+4,i*self.pikuseru/16,width = 2)
+                self.rain(-self.midx,-i*self.pikuseru/16,-self.midx+4,-i*self.pikuseru/16,width = 2)
+                self.rain(self.midx,i*self.pikuseru/16,self.midx-4,i*self.pikuseru/16,width = 2)
+                self.rain(self.midx,-i*self.pikuseru/16,self.midx-4,-i*self.pikuseru/16,width = 2)
+        for i in range(4*self.inv-4):
+            if(i%4):
+                self.rain(-self.midx,i*self.pikuseru/8,-self.midx+8,i*self.pikuseru/8,width = 2)
+                self.rain(-self.midx,-i*self.pikuseru/8,-self.midx+8,-i*self.pikuseru/8,width = 2)
+                self.rain(self.midx,i*self.pikuseru/8,self.midx-8,i*self.pikuseru/8,width = 2)
+                self.rain(self.midx,-i*self.pikuseru/8,self.midx-8,-i*self.pikuseru/8,width = 2)
+        for i in range(1,2*self.inv-4,2):
+                self.rain(-self.midx,i*self.pikuseru/4,-self.midx+12,i*self.pikuseru/4,width = 2)
+                self.rain(-self.midx,-i*self.pikuseru/4,-self.midx+12,-i*self.pikuseru/4,width = 2)
+                self.rain(self.midx,i*self.pikuseru/4,self.midx-12,i*self.pikuseru/4,width = 2)
+                self.rain(self.midx,-i*self.pikuseru/4,self.midx-12,-i*self.pikuseru/4,width = 2)
     def graph(self,f,color = (0,0,0)):
         y = f(-1)*self.pikuseru*math.pi
         x = -self.midx
+        s = 0
         for i in range(self.w):
             if(x < self.midx and x > -self.midx and y > -self.midy and y<self.midy):
-                self.rain(x-1,y,x,f(x/self.pikuseru*math.pi)*self.pikuseru,color,2)
+                if(s<20):
+                    self.rain(x-1,y,x,f(x/self.pikuseru*math.pi)*self.pikuseru,color,2)
+            s += (1+(y-f(x/self.pikuseru*math.pi)*self.pikuseru)**2)**0.5
             y = f(x/self.pikuseru*math.pi)*self.pikuseru
             x+=1
+            if(s>33):
+                s-=23
         pygame.display.flip()
-g = Graph(math.sin,interval = 3)
+g = Graph(math.sin,width = 600,height = 450,interval = 4)
 g.graph(math.cos,(0,0,255))
+done = False
+while not done:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+pygame.quit()

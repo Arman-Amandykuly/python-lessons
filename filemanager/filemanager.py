@@ -26,7 +26,7 @@ Good luck! :3
 '''
 def color(c):
     try:
-        os.system("color ")
+        os.system("color " + c[1])
     except:
         pass
 def cd(c):

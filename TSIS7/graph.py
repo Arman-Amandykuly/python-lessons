@@ -2,7 +2,8 @@ import pygame,math
 class Graph:
     addx = 20
     addy = 20
-    #font = pygame.font.SysFont("comicsansms",10)
+    def txt(s,x,y):
+        
     def rain(self,x1,y1,x2,y2,color = (0,0,0),width = 1):
         int(x1+self.addx+self.midx)
         pygame.draw.line(self.canvas,color,(int(x1+self.addx+self.midx),int(self.midy-y1+self.addy)),(int(x2+self.addx+self.midx),int(-y2+self.addy+self.midy)),width)
@@ -31,7 +32,7 @@ class Graph:
             y = self.func(x/self.pikuseru*math.pi)*self.pikuseru
             x+=1
         pygame.draw.rect(self.canvas,(0,0,0),pygame.Rect((self.addx,self.addy),(self.w,self.h)),3)
-        pygame.display.flip()
+        self.canvas.flip(self.text)
         for i in range(4*self.inv):
             if(i%8):
                 self.rain(i*self.pikuseru/8,self.midy,i*self.pikuseru/8,self.midy-4,width = 2)

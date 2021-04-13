@@ -88,7 +88,7 @@ class Enemy:
     def update(self):
         self.rect.move_ip(0,self.sp)
         self.y+=self.sp
-        if((self.x in range(pl.x+100,pl.x+pl.w+100) and self.y in range(pl.y-10, pl.y+pl.h-10)) or (pl.x in range(self.x-100,self.x+self.w-100) and pl.y in range(self.y+10,self.y+self.h+10)) or (pl.x in range(self.x-100+pl.w,self.x+self.w-100+pl.w) and pl.y in range(self.y+10,self.y+self.h+10))):
+        if((self.x in range(pl.x+100,pl.x+pl.w+100) and self.y in range(pl.y, pl.y+pl.h)) or (pl.x in range(self.x-100,self.x+self.w-100) and pl.y in range(self.y,self.y+self.h))):
             global collided,expx,expy
             expx = (self.x+pl.x-100)/2
             expy = (self.y+pl.y)/2

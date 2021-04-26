@@ -4,7 +4,7 @@ def create_tables():
     conn = None
     try:
         params = config()
-        conn = psycopg2.connect(params)
+        conn = psycopg2.connect(**params)
         commands = (
             """CREATE TABLE [IF NOT EXISTS] vendors(
                 vendor_id SERIAL PRIMARY KEY,
